@@ -1,0 +1,14 @@
+# Copyright (c) 2021 Brian Bradley
+
+manifest:
+
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: zephyr-v2.7.0
+      import:
+        path-prefix: rtos

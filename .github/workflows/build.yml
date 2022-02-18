@@ -1,0 +1,25 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: zephyrprojectrtos/ci:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Initialize
+        run: |
+          pip3 install -U west
+          west init -l .
+          west update
+          pip3 install -r ../rtos/zephyr/scripts/requirements-base.txt
+
+      - name: Build firmware
+        run: |
+          west build -b nrf52840dk_nrf52840 -s app
+        env:
+          CMAKE_PREFIX_PATH: /opt/toolchains
+          

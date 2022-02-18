@@ -1,0 +1,18 @@
+# editors
+.vscode
+*.swp
+*~
+
+# python
+.venv
+__pycache__
+
+# build
+/build*
+
+# OS files
+[Tt]humbs.db
+*.DS_Store
+
+# tests
+*sanity*/
