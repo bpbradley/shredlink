@@ -1,7 +1,13 @@
+# Shred Link
+
+Development repository for work related to an open source wii controller adapter.
+
+The development is primarily focused on guitar hero controllers.
+
 ## Getting Started
 
-Before getting started, make sure you have a proper Zephyr development
-environment. You can follow the official
+Shred Link is based on the Zephyr RTOS, so before getting started,
+make sure to have a proper Zephyr development environment. You can follow the official
 [Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/getting_started/index.html).
 
 ### Initialization
@@ -12,9 +18,9 @@ that by running:
 
 ```shell
 # initialize workspace (main branch)
-west init -m https://github.com/{$GITHUB_REPOSITORY} --mr main workspace
+west init -m https://github.com/bpbradley/shredlink --mr main shredlink-workspace
 # update Zephyr modules
-cd workspace
+cd shredlink-workspace
 west update
 ```
 

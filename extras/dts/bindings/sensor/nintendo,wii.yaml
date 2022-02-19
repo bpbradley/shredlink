@@ -1,0 +1,6 @@
+description: |
+    Nintendo Wii peripheral devices
+
+compatible: "nintendo,wii"
+
+include: i2c-device.yaml

@@ -1,3 +1,4 @@
 menu "Drivers"
 rsource "sensor/Kconfig"
+rsource "wii/Kconfig"
 endmenu
