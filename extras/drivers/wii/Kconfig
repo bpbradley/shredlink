@@ -1,0 +1,14 @@
+# Copyright (c) 2021 Brian Bradley
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig WII_PERIPHERAL_DRIVER
+	bool "Wii peripheral driver"
+	depends on I2C
+	help
+	  Enable driver for Wii peripherals.
+
+if WII_PERIPHERAL_DRIVER
+module = WII
+module-str = wii
+source "subsys/logging/Kconfig.template.log_config"
+endif

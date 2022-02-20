@@ -1,0 +1,8 @@
+sample:
+  name: Wii Guitar Access Sample
+  description: Demonstrate basic access of wii guitar data
+tests:
+  sample.wii.guitar:
+    build_only: true
+    platform_allow: nrf52840dk_nrf52840
+    tags: wii guitar
