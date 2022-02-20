@@ -6,6 +6,17 @@ menu "Zephyr"
 source "Kconfig.zephyr"
 endmenu
 
-module = APP
-module-str = APP
+menu "shredlink"
+module = SHREDLINK
+module-str = shredlink
 source "subsys/logging/Kconfig.template.log_config"
+
+config GAMEPAD_POLL_RATE_HZ
+    int "Set the poll rate for refreshing data from the gamepad"
+    range 10 10000
+    default 2000
+    help
+      The poll rate is in Hz (or frames per second). Note that the
+      capture time of a frame is currently synchronous with polling,
+      so the actual frame rate will be lower than this.
+endmenu

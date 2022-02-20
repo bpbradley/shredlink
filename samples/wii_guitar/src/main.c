@@ -39,7 +39,7 @@ void main(void)
 
 	wii = device_get_binding(WII_GUITAR);
 	if (wii == NULL) {
-		printk("Error getting gas sensor device: %s\n", WII_GUITAR);
+		printk("Error getting device: %s\n", WII_GUITAR);
 	}
 
 	while (1) {
