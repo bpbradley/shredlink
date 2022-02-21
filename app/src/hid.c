@@ -183,7 +183,6 @@ void hid_process(void){
 		LOG_ERR("Failed to enable USB");
 		return;
 	}
-
 	struct hid_report last_report = {0};
     while(1){
         /* Grab the latest report when it is available,

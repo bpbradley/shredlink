@@ -46,18 +46,21 @@ static void poll_work_item(struct k_work *work){
 
 void gamepad_polling_process(void){
     static struct polling_work_item work_item;
+
     k_work_poll_init(&work_item.work, poll_work_item);
     k_poll_signal_init(&work_item.signal);
     k_poll_event_init(&work_item.event, 
                     K_POLL_TYPE_SIGNAL,
                     K_POLL_MODE_NOTIFY_ONLY,
                     &work_item.signal);
+
 	while (1) {
         /* Submit work to the system workqueue to be processed in parallel
         to the waiting process. This way, any process latency associated
         with data acquisition and submission is fully decoupled from the
         requested poll rate. */
         k_work_poll_submit(&work_item.work, &work_item.event, 1, K_NO_WAIT);
+        
 		k_usleep(USEC_PER_SEC / CONFIG_GAMEPAD_POLL_RATE_HZ);
 	}
 }
