@@ -11,12 +11,40 @@ module = SHREDLINK
 module-str = shredlink
 source "subsys/logging/Kconfig.template.log_config"
 
-config GAMEPAD_POLL_RATE_HZ
-    int "Set the poll rate for refreshing data from the gamepad"
-    range 10 10000
-    default 2000
+config GAMEPAD_DAQ_POLL_MODE
+    bool "Capture data from the gamepad via polling (as opposed to interrupt)"
+    default y
+    select POLL
     help
-      The poll rate is in Hz (or frames per second). Note that the
-      capture time of a frame is currently synchronous with polling,
-      so the actual frame rate will be lower than this.
+      Currently this is the only supported method of data acquisition.
+      Eventually when more gamepad backends are supported (which support interrupts)
+      this will be configurable.
+if GAMEPAD_DAQ_POLL_MODE
+    config GAMEPAD_POLL_RATE_HZ
+        int "Set the poll rate for refreshing data from the gamepad"
+        range 10 10000
+        default 2000
+        help
+        The poll rate is in Hz (or frames per second).
+endif
+config SHREDLINK_DAQ_STACKSIZE
+    int "Size of the stack allowed for the data acquisition process"
+    range 512 8192
+    default 2048
+config SHREDLINK_DAQ_PRIORITY
+    int "Priority for the data acquisition process"
+    range 0 7
+    default 7
+config SHREDLINK_DAQ_START_DELAY
+    int "Delay (in milliseconds) before starting the daq process"
+    range 0 5000
+    default 0
+config SHREDLINK_HID_STACKSIZE
+    int "Size of the stack allowed for the hid reporting process"
+    range 512 8192
+    default 2048
+config SHREDLINK_HID_PRIORITY
+    int "Priority for the hid reporting process"
+    range 0 7
+    default 7
 endmenu
