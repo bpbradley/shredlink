@@ -5,8 +5,9 @@ list (APPEND SYSCALL_INCLUDE_DIRS
     ${CMAKE_SOURCE_DIR}/../../extras/drivers/wii
 )
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+
 project(sample_wii_guitar)
-message("INCLUDE DIRS ${SYSCALL_INCLUDE_DIRS}")
+
 target_sources(app PRIVATE
   src/main.c
   )

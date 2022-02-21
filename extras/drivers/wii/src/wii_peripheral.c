@@ -59,7 +59,6 @@ static int wii_periph_poll_data(const struct device * dev, struct wii_btn_data *
 
 	wii_bus_config(dev);
 	i2c_write(data->i2c_master, &reg, 1, cfg->i2c_addr);
-	k_usleep(275);
 	int rc = i2c_read(data->i2c_master, wii->raw, 6, cfg->i2c_addr);
 	LOG_HEXDUMP_DBG(wii->raw, 6, "wii raw data");
 	return rc;

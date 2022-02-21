@@ -4,10 +4,13 @@
  * Application version information.
  *
  * Copyright (c) 2021 Nordic Semiconductor ASA
+ * Copyright (c) 2022 Brian Bradley
  */
 
 #ifndef APP_VERSION_H_
 #define APP_VERSION_H_
+
+#define APP_NAME_STR	"${PROJECT_NAME}"
 
 /** Application major version. */
 #define APP_VERSION_MAJOR ${PROJECT_VERSION_MAJOR}

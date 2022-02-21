@@ -1,0 +1,13 @@
+/*
+ * Copyright 2021 Brian Bradley
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&i2c1 {
+	wii_guitar: wii@52 {
+		compatible = "nintendo,wii";
+		reg = <0x52>;
+		label = "WII";
+	};
+};
