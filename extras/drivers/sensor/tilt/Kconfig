@@ -1,0 +1,11 @@
+
+# Copyright (c) 2022 Brian Bradley
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig TILT_SENSOR
+	bool "Enable tilt sensors"
+config GPIO_TILT_SENSOR
+    bool "Enable GPIO based tilt sensor driver"
+if GPIO_TILT_SENSOR
+rsource "gpio/Kconfig"
+endif
