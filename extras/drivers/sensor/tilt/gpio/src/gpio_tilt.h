@@ -9,19 +9,19 @@
 #include <drivers/gpio.h>
 
 struct gpio_tilt_data {
-	const struct device *tilt_gpio;
-    int tilted;
+	struct gpio_dt_spec sensor;
+    int status;
     
-    #ifdef CONFIG_TILT_TRIGGERS
+    #ifdef CONFIG_TILT_SENSOR_TRIGGER
         struct gpio_callback alert_cb;
         const struct device *dev;
         struct sensor_trigger trig;
         sensor_trigger_handler_t trigger_handler;
     
-    #ifdef CONFIG_TILT_TRIGGERS_OWN_THREAD
+    #ifdef CONFIG_TILT_SENSOR_TRIGGER_OWN_THREAD
         struct k_sem sem;
     #endif
-    #ifdef CONFIG_TILT_TRIGGERS_GLOBAL_THREAD
+    #ifdef CONFIG_TILT_SENSOR_TRIGGER_GLOBAL_THREAD
         struct k_work work;
     #endif
 
@@ -29,8 +29,17 @@ struct gpio_tilt_data {
 };
 
 struct gpio_tilt_config {
-	uint8_t tilt_pin;
-	uint8_t tilt_flags;
 	const char *tilt_controller;
 };
+
+#ifdef CONFIG_TILT_SENSOR_TRIGGER
+int gpio_tilt_attr_set(const struct device *dev, enum sensor_channel chan,
+		     enum sensor_attribute attr,
+		     const struct sensor_value *val);
+int gpio_tilt_trigger_set(const struct device *dev,
+			const struct sensor_trigger *trig,
+			sensor_trigger_handler_t handler);
+int gpio_tilt_setup_interrupt(const struct device *dev);
+#endif /* CONFIG_TILT_SENSOR_TRIGGER */
+
 #endif

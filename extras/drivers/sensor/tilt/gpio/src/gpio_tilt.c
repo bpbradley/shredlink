@@ -22,13 +22,12 @@ LOG_MODULE_REGISTER(tilt_gpio, CONFIG_SENSOR_LOG_LEVEL);
 int tilt_sensor_read(const struct device *dev)
 {
 	struct gpio_tilt_data *data = dev->data;
-	const struct gpio_tilt_config *cfg = dev->config;
-	const struct device * tilt = data->tilt_gpio;
-	int rc = gpio_pin_get(tilt, cfg->tilt_pin);
+	struct gpio_dt_spec * sensor = &data->sensor;
+	int rc = gpio_pin_get_dt(sensor);
 	if (rc < 0){
 		return rc;
 	}
-	data->tilted = rc;
+	data->status = rc;
 	return 0;
 }
 
@@ -46,7 +45,7 @@ static int gpio_tilt_get(const struct device *dev,
 {
 	struct gpio_tilt_data *data = dev->data;
 	if (chan == (enum sensor_channel) SENSOR_CHAN_TILT){
-		val->val1 = data->tilted;
+		val->val1 = data->status;
 		return 0;
 	}
 	return -ENOTSUP;
@@ -55,7 +54,7 @@ static int gpio_tilt_get(const struct device *dev,
 static const struct sensor_driver_api gpio_tilt_api_funcs = {
 	.sample_fetch = gpio_tilt_fetch,
 	.channel_get = gpio_tilt_get,
-#ifdef CONFIG_TILT_TRIGGERS
+#ifdef CONFIG_TILT_SENSOR_TRIGGER
 	.attr_set = gpio_tilt_attr_set,
 	.trigger_set = gpio_tilt_trigger_set,
 #endif /* CONFIG_TILT_TRIGGERS */
@@ -64,24 +63,26 @@ static const struct sensor_driver_api gpio_tilt_api_funcs = {
 int gpio_tilt_init(const struct device *dev)
 {
 	struct gpio_tilt_data *data = dev->data;
-	const struct gpio_tilt_config *cfg = dev->config;
-
-	if (!device_is_ready(data->tilt_gpio)) {
+	int rc;
+	if (!device_is_ready(data->sensor.port)) {
 		LOG_ERR("GPIO device for tilt is not ready.");
 		return -EINVAL;
 	}
 	/* Configure GPIO but don't turn it on */
-	gpio_pin_configure(data->tilt_gpio, cfg->tilt_pin, GPIO_INPUT | cfg->tilt_flags);
-	return 0;
+	rc = gpio_pin_configure_dt(&data->sensor, 0);
+	#ifdef CONFIG_TILT_SENSOR_TRIGGER
+	if (rc == 0){
+		rc = gpio_tilt_setup_interrupt(dev);
+	}
+	#endif /* CONFIG_TILT_SENSOR_TRIGGER */
+	return rc;
 }
 
 static struct gpio_tilt_data gpio_tilt_data = {
-	.tilt_gpio = DEVICE_DT_GET(DT_INST_PHANDLE(0, tilt_gpios)),
+	.sensor = GPIO_DT_SPEC_INST_GET(0, tilt_gpios),
 };
 
 static const struct gpio_tilt_config gpio_tilt_cfg = {
-	.tilt_pin = DT_INST_GPIO_PIN(0, tilt_gpios),
-	.tilt_flags = DT_INST_GPIO_FLAGS(0, tilt_gpios),
 	.tilt_controller = DT_INST_GPIO_LABEL(0, tilt_gpios),
 };
 
