@@ -19,7 +19,7 @@
 
 #ifdef CONFIG_TILT_SENSOR_TRIGGER
 static void tilt_trigger_handler(const struct device *dev,
-			    struct sensor_trigger *trig)
+			    const struct sensor_trigger *trig)
 {
 	struct sensor_value tilt;
 	struct gpio_dt_spec led = LED_SPEC(LED_ID);

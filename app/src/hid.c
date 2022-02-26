@@ -17,31 +17,11 @@
 
 LOG_MODULE_DECLARE(shredlink, CONFIG_SHREDLINK_LOG_LEVEL);
 
-/**
- * @TODO: This will eventually be moved into the gamepad api
- * 
- */
-struct __attribute__((packed)) guitar_data{
-	uint8_t analog_x: 6;
-	uint8_t gh0: 2;
-	uint8_t analog_y: 6;
-	uint8_t gh1: 2;
-	uint8_t touchbar: 5;
-	uint8_t empty0: 3;
-	uint8_t whammy: 5;
-	uint8_t empty1: 3;
-	uint8_t empty2: 2;
-	uint8_t button_plus: 1;
-	uint8_t empty3: 1;
-	uint8_t button_minus: 1;
-	uint8_t empty4: 1;
-	uint8_t strum_down: 1;
-	uint8_t empty5: 1;
-	uint8_t strum_up: 1;
-	uint8_t empty6: 2;
-	uint8_t neck: 5;
-};
-
+#ifdef CONFIG_TILT_SENSOR
+#define BTN_COUNT	10
+#else
+#define BTN_COUNT 9
+#endif
 static const uint8_t hid_report_desc[] = 
 {
 	HID_USAGE_PAGE(HID_USAGE_GEN_DESKTOP),
@@ -51,15 +31,15 @@ static const uint8_t hid_report_desc[] =
 			/* Bits used for button signalling */
 			HID_USAGE_PAGE(HID_USAGE_GEN_BUTTON),
 			HID_USAGE_MIN8(1),
-			HID_USAGE_MAX8(9),
+			HID_USAGE_MAX8(BTN_COUNT),
 			HID_LOGICAL_MIN8(0),
 			HID_LOGICAL_MAX8(1),
-			HID_REPORT_COUNT(9),
+			HID_REPORT_COUNT(BTN_COUNT),
 			HID_REPORT_SIZE(1),
 			/* HID_INPUT (Data,Var,Abs) */
 			HID_INPUT(0x02),
 			/* Unused bits */
-			HID_REPORT_SIZE(7),
+			HID_REPORT_SIZE(16 - BTN_COUNT),
 			HID_REPORT_COUNT(1),
 			/* HID_INPUT (Cnst,Ary,Abs) */
 			HID_INPUT(1),
@@ -88,18 +68,6 @@ static const uint8_t hid_report_desc[] =
 };
 
 /**
- * @brief This union is a conveient container which allows
- * easily converting between raw frame data, and useful
- * gamepad data without needing to mask and shift everything
- * manually.
- * 
- */
-typedef union wii_data_fmt{
-	struct wii_btn_data frame;
-	struct guitar_data guitar;
-}wii_fmt_t;
-
-/**
  * @brief Pack the hid report so that it can be sent raw
  * rather than packing into a coniguous array manually.
  * 
@@ -120,35 +88,20 @@ K_MSGQ_DEFINE(hid_msgq, sizeof(struct hid_report), 5, 4);
  * @retval -ENODEV on rpt or data NULL
  * @retval 0 on success
  */
-static int fill_hid_report(struct hid_report * rpt, wii_fmt_t * data){
+static int fill_hid_report(struct hid_report * rpt, struct gamepad * data){
 	if (rpt == NULL || data == NULL){
 		return -ENODEV;
 	}
-	rpt->axes[0] = data->guitar.analog_x;
-	rpt->axes[1] = data->guitar.analog_y;
-	rpt->whammy = data->guitar.whammy;
-	rpt->buttons = data->guitar.neck;
-	WRITE_BIT(rpt->buttons, 5, data->guitar.button_plus);
-	WRITE_BIT(rpt->buttons, 6, data->guitar.button_minus);
-	WRITE_BIT(rpt->buttons, 7, data->guitar.strum_up);
-	WRITE_BIT(rpt->buttons, 8, data->guitar.strum_down);
-
-    /**
-     * @TODO: The logic level is inverted on the wii guitar I am testing with.
-     * This should be handled in the gamepad API instead of the application layer.
-     * 
-     */
-	rpt->buttons ^= 0xffff; /* logic level is inverted */
-	LOG_DBG("report: x: %d y: %d whammy: %d buttons: %02x", rpt->axes[0], rpt->axes[1], rpt->whammy, rpt->buttons);
+	rpt->axes[0] = data->axes[0];
+	rpt->axes[1] = data->axes[1];
+	rpt->whammy = data->axes[2];
+	rpt->buttons = data->buttons;
 	return 0;
 }
 
-int submit_frame_data(struct wii_btn_data frame){
+int submit_frame_data(struct gamepad * frame){
     struct hid_report report;
-    wii_fmt_t fmt = {
-        .frame = frame
-    };
-    int ret = fill_hid_report(&report, &fmt);
+    int ret = fill_hid_report(&report, frame);
     if (ret == 0){
             while ((ret = k_msgq_put(&hid_msgq, &report, K_NO_WAIT)) != 0) {
             /* message queue is full: purge old data & try again */

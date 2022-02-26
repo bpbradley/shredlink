@@ -11,3 +11,11 @@
 		label = "WII";
 	};
 };
+
+/ {
+    tilt0: tilt_0 {
+        label = "TILT_0";
+        compatible = "gpio-tilt";
+        tilt-gpios = <&gpiob 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    };
+};

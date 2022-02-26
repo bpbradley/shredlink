@@ -11,15 +11,15 @@
 
 #ifndef __SHREDLINK_HID_H
 #define __SHREDLINK_HID_H
-#include <wii.h>
+#include <shredlink/daq.h>
 
 /**
  * @brief Submit a new frame to the queue to be processed
  * 
- * @param frame : frame data to be processed
+ * @param frame : pointer to frame data to be processed
  * @retval 0 on success
  * @retval -errno otherwise
  */
-int submit_frame_data(struct wii_btn_data frame);
+int submit_frame_data(struct gamepad * frame);
 
 #endif

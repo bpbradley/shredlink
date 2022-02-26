@@ -51,7 +51,7 @@ static void test_get_tilt(void){
 
 #ifdef CONFIG_TILT_SENSOR_TRIGGER
 static void tilt_trigger_handler(const struct device *dev,
-			    struct sensor_trigger *trig)
+			    const struct sensor_trigger *trig)
 {
 	return;
 }

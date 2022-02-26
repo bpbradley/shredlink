@@ -69,8 +69,7 @@ int gpio_tilt_init(const struct device *dev)
 		LOG_ERR("GPIO device for tilt is not ready.");
 		return -EINVAL;
 	}
-	/* Configure GPIO but don't turn it on */
-	rc = gpio_pin_configure_dt(&data->sensor, 0);
+	rc = gpio_pin_configure_dt(&data->sensor, GPIO_INPUT);
 	#ifdef CONFIG_TILT_SENSOR_TRIGGER
 	if (rc == 0){
 		rc = gpio_tilt_setup_interrupt(dev);

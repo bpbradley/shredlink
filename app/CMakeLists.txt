@@ -26,5 +26,9 @@ else()
     message(FATAL_ERROR "Polling mode is disabled but is currently required, as interrupt mode is not yet supported.")
 endif()
 
+if (CONFIG_TILT_SENSOR)
+    list(APPEND SHREDLINK_SOURCES src/tilt.c)
+endif()
+
 include_directories(include)
 target_sources(app PRIVATE ${SHREDLINK_SOURCES})
