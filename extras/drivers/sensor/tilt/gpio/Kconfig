@@ -1,0 +1,8 @@
+config MINIMUM_HOLD_TIME_MS
+    int "Minimum time the sensor must be in the same state before a trigger"
+    depends on TILT_SENSOR_TRIGGER
+    default 250
+    range 0 1000
+    help
+      This will prevent errant triggers from short events (such as from vibration)
+      but it will (of course) also introduce a latency equal to the hold time.

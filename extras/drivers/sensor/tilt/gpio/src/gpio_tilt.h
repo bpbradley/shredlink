@@ -24,7 +24,9 @@ struct gpio_tilt_data {
     #ifdef CONFIG_TILT_SENSOR_TRIGGER_GLOBAL_THREAD
         struct k_work work;
     #endif
-
+    #if CONFIG_MINIMUM_HOLD_TIME_MS > 0
+        struct k_timer hold_timer;
+    #endif
     #endif
 };
 
@@ -33,9 +35,6 @@ struct gpio_tilt_config {
 };
 
 #ifdef CONFIG_TILT_SENSOR_TRIGGER
-int gpio_tilt_attr_set(const struct device *dev, enum sensor_channel chan,
-		     enum sensor_attribute attr,
-		     const struct sensor_value *val);
 int gpio_tilt_trigger_set(const struct device *dev,
 			const struct sensor_trigger *trig,
 			sensor_trigger_handler_t handler);

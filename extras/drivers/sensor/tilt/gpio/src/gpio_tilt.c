@@ -55,7 +55,6 @@ static const struct sensor_driver_api gpio_tilt_api_funcs = {
 	.sample_fetch = gpio_tilt_fetch,
 	.channel_get = gpio_tilt_get,
 #ifdef CONFIG_TILT_SENSOR_TRIGGER
-	.attr_set = gpio_tilt_attr_set,
 	.trigger_set = gpio_tilt_trigger_set,
 #endif /* CONFIG_TILT_TRIGGERS */
 };
