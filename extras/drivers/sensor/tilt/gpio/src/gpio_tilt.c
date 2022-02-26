@@ -34,9 +34,11 @@ int tilt_sensor_read(const struct device *dev)
 static int gpio_tilt_fetch(const struct device *dev,
 				enum sensor_channel chan)
 {
-	__ASSERT_NO_MSG(chan == SENSOR_CHAN_ALL || chan == SENSOR_CHAN_TILT);
-
-	return tilt_sensor_read(dev);
+	if (chan == SENSOR_CHAN_ALL ||
+		chan == (enum sensor_channel) SENSOR_CHAN_TILT){
+		return tilt_sensor_read(dev);
+	}
+	return -ENOTSUP;
 }
 
 static int gpio_tilt_get(const struct device *dev,

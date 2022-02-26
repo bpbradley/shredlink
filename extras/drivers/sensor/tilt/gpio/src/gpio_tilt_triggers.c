@@ -30,6 +30,7 @@ static void handle_int(const struct device *dev)
 	#endif
 }
 
+#if CONFIG_TILT_SENSOR_MINIMUM_HOLD_TIME_MS > 0
 /**
  * @brief Attempts to filter spurious or unintentional triggers.
  * 
@@ -55,7 +56,7 @@ static void filter_handler(struct k_timer * timer)
 		prev_state = state;
 	};
 }
-
+#endif
 /**
  * @brief This will prepare an interrupt to be handled by the application.
  * 
@@ -69,8 +70,8 @@ static void filter_handler(struct k_timer * timer)
  * @param data : pointer to sensor data container
  */
 static void prepare_int(struct gpio_tilt_data * data){
-	#if CONFIG_MINIMUM_HOLD_TIME_MS > 0
-		k_timer_start(&data->hold_timer, K_MSEC(CONFIG_MINIMUM_HOLD_TIME_MS), K_NO_WAIT);
+	#if CONFIG_TILT_SENSOR_MINIMUM_HOLD_TIME_MS > 0
+		k_timer_start(&data->hold_timer, K_MSEC(CONFIG_TILT_SENSOR_MINIMUM_HOLD_TIME_MS), K_NO_WAIT);
 	#else
 		handle_int(data->dev);
 	#endif
@@ -223,7 +224,7 @@ int gpio_tilt_setup_interrupt(const struct device *dev)
     gpio_init_callback(&data->alert_cb, alert_cb, BIT(data->sensor.pin));
     int rc = gpio_add_callback(tilt, &data->alert_cb);
 	
-	#if CONFIG_MINIMUM_HOLD_TIME_MS > 0
+	#if CONFIG_TILT_SENSOR_MINIMUM_HOLD_TIME_MS > 0
 	/* Setup hold filter */
 	k_timer_init(&data->hold_timer, filter_handler, NULL);
 	data->hold_timer.user_data = (void *)data;

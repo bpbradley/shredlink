@@ -24,7 +24,7 @@ struct gpio_tilt_data {
     #ifdef CONFIG_TILT_SENSOR_TRIGGER_GLOBAL_THREAD
         struct k_work work;
     #endif
-    #if CONFIG_MINIMUM_HOLD_TIME_MS > 0
+    #if CONFIG_TILT_SENSOR_MINIMUM_HOLD_TIME_MS > 0
         struct k_timer hold_timer;
     #endif
     #endif

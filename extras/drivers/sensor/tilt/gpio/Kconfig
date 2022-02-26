@@ -1,4 +1,4 @@
-config MINIMUM_HOLD_TIME_MS
+config TILT_SENSOR_MINIMUM_HOLD_TIME_MS
     int "Minimum time the sensor must be in the same state before a trigger"
     depends on TILT_SENSOR_TRIGGER
     default 250

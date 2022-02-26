@@ -1,0 +1,26 @@
+tests:
+  drivers.sensor.tilt:
+    build_only: true
+    platform_allow: nrf52840dk_nrf52840
+    tags: shredlink tilt
+  drivers.sensor.tilt.triggers.global:
+    build_only: true
+    platform_allow: nrf52840dk_nrf52840
+    extra_args: CONFIG_TILT_SENSOR_TRIGGER_GLOBAL_THREAD=y 
+    tags: shredlink tilt
+  drivers.sensor.tilt.triggers.ownthread:
+    build_only: true
+    platform_allow: nrf52840dk_nrf52840
+    extra_args: CONFIG_TILT_SENSOR_TRIGGER_OWN_THREAD=y
+    tags: shredlink tilt
+  drivers.sensor.tilt.triggers.nowait:
+    build_only: true
+    platform_allow: nrf52840dk_nrf52840
+    extra_args: CONFIG_TILT_SENSOR_TRIGGER_GLOBAL_THREAD=y CONFIG_TILT_SENSOR_MINIMUM_HOLD_TIME_MS=0
+    tags: shredlink tilt
+  drivers.sensor.tilt.triggers.hold:
+    build_only: true
+    platform_allow: nrf52840dk_nrf52840
+    extra_args: CONFIG_TILT_SENSOR_TRIGGER_GLOBAL_THREAD=y CONFIG_TILT_SENSOR_MINIMUM_HOLD_TIME_MS=250
+    tags: shredlink tilt
+  
