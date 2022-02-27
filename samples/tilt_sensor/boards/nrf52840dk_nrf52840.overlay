@@ -4,14 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-&i2c0 {
-	wii_guitar: wii@52 {
-		compatible = "nintendo,wii";
-		reg = <0x52>;
-		label = "WII";
-	};
-};
-
 / {
     tilt0: tilt_0 {
         label = "TILT_0";

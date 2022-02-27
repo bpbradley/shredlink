@@ -1,4 +1,4 @@
 # Copyright (c) 2022 Brian Bradley
 # SPDX-License-Identifier: Apache-2.0
 
-add_subdirectory_ifdef(CONFIG_TILT_SENSOR tilt)
+add_subdirectory_ifdef(CONFIG_GPIO_TILT_SENSOR gpio)

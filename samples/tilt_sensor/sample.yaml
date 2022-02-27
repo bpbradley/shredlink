@@ -1,0 +1,8 @@
+sample:
+  name: Tilt sensor demonstration
+  description: Demonstrate basic usage of a tilt sensor
+tests:
+  sample.sensor.tilt:
+    build_only: true
+    platform_allow: nrf52840dk_nrf52840
+    tags: sensors tilt

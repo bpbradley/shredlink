@@ -1,0 +1,12 @@
+# Copyright (c) 2022 Brian Bradley
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+    GPIO based tilt sensor driver compatible
+
+compatible: "gpio-tilt"
+include: base.yaml
+properties:
+    tilt-gpios:
+      type: phandle-array
+      required: true

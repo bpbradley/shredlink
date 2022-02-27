@@ -1,0 +1,42 @@
+
+# Copyright (c) 2022 Brian Bradley
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig TILT_SENSOR
+	bool "Enable tilt sensors"
+config GPIO_TILT_SENSOR
+    depends on GPIO
+    bool "Enable GPIO based tilt sensor driver"
+config TILT_SENSOR_TRIGGER
+    bool "Enable triggers on tilt sensor drivers"
+
+if GPIO_TILT_SENSOR
+rsource "gpio/Kconfig"
+
+choice
+	prompt "tilt sensor trigger mode"
+	default TILT_SENSOR_TRIGGER_NONE
+
+config TILT_SENSOR_TRIGGER_NONE
+	bool "No trigger"
+
+config TILT_SENSOR_TRIGGER_GLOBAL_THREAD
+	select TILT_SENSOR_TRIGGER
+	bool "Use global thread"
+
+config TILT_SENSOR_TRIGGER_OWN_THREAD
+	select TILT_SENSOR_TRIGGER
+	bool "Use own thread"
+
+config TILT_SENSOR_THREAD_STACK_SIZE
+	int "Sensor delayed work thread stack size"
+	depends on TILT_SENSOR_TRIGGER_OWN_THREAD
+	default 1024
+
+config TILT_SENSOR_THREAD_PRIORITY
+	int "Tilt sensor thread priority"
+	depends on TILT_SENSOR_TRIGGER_OWN_THREAD
+	default 10
+endchoice
+
+endif

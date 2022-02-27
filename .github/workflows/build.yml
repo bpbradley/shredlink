@@ -16,6 +16,12 @@ jobs:
           west init -l .
           west update
           pip3 install -r ../rtos/zephyr/scripts/requirements-base.txt
+      
+      - name: Run Tests
+        run: |
+          ../rtos/zephyr/scripts/twister -v --tag shredlink -T .
+        env:
+          CMAKE_PREFIX_PATH: /opt/toolchains
 
       - name: Build firmware
         run: |
