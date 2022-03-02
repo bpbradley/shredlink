@@ -6,7 +6,19 @@ menuconfig WII_PERIPHERAL_DRIVER
 	depends on I2C
 	help
 	  Enable driver for Wii peripherals.
-
+config WII_WRITE_READ_DELAY_US
+	int "Delay time between writing a register and waiting to poll data"
+	default 180
+	range 0 300
+	help
+	  Official wii peripherals do not have data available immediately upon request.
+	  i2c transactions will fail if there is no wait period. However, some unofficial
+	  controllers appear not to have this limitation, and so the delay can be reduced
+	  to 0 if using only those peripherals.
+config WII_INIT_SEQ_DELAY_US
+	int "Delay time between writing command sequences in the init process"
+	default 50
+	range 0 300
 if WII_PERIPHERAL_DRIVER
 module = WII
 module-str = wii
