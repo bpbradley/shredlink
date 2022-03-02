@@ -10,7 +10,7 @@ list (APPEND SYSCALL_INCLUDE_DIRS
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
-project(shredlink LANGUAGES C VERSION 0.1.1)
+project(shredlink LANGUAGES C VERSION 0.2.0)
 
 configure_file(app_version.h.in ${CMAKE_BINARY_DIR}/app/include/app_version.h)
 target_include_directories(app PRIVATE ${CMAKE_BINARY_DIR}/app/include src)

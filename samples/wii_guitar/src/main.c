@@ -58,6 +58,6 @@ void main(void)
 					data.guitar.analog_x, data.guitar.analog_y, data.guitar.whammy, data.guitar.buttons);
 			}
 		}
-		k_usleep(500);
+		k_msleep(500);
 	}
 }

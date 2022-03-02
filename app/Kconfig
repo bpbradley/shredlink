@@ -22,8 +22,8 @@ config GAMEPAD_DAQ_POLL_MODE
 if GAMEPAD_DAQ_POLL_MODE
     config GAMEPAD_POLL_RATE_HZ
         int "Set the poll rate for refreshing data from the gamepad"
-        range 10 10000
-        default 2000
+        range 10 2500
+        default 1100
         help
         The poll rate is in Hz (or frames per second).
 endif
