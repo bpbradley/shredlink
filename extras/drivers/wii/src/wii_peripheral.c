@@ -12,15 +12,14 @@
 #define DT_DRV_COMPAT nintendo_wii
 
 #include <errno.h>
-#include <zephyr.h>
-#include <device.h>
-#include <kernel.h>
-#include <drivers/i2c.h>
-#include <init.h>
-#include <sys/__assert.h>
-#include <logging/log.h>
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/i2c.h>
+#include <zephyr/init.h>
+#include <zephyr/sys/__assert.h>
+#include <zephyr/logging/log.h>
 #include <wii.h>
-#include <sys/byteorder.h>
+#include <zephyr/sys/byteorder.h>
 
 LOG_MODULE_REGISTER(wii, CONFIG_WII_LOG_LEVEL);
 

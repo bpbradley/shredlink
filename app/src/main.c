@@ -9,8 +9,8 @@
  * 
  */
 
-#include <zephyr.h>
-#include <logging/log.h>
+#include <zephyr/kernel.h>
+#include <zephyr/logging/log.h>
 #include <app_version.h>
 
 LOG_MODULE_REGISTER(shredlink, CONFIG_SHREDLINK_LOG_LEVEL);

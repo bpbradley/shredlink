@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: Apache-2.0
  * 
  */
-#include <zephyr.h>
-#include <device.h>
-#include <logging/log.h>
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/logging/log.h>
 #include <shredlink/hid.h>
-#include <usb/usb_device.h>
-#include <usb/class/usb_hid.h>
+#include <zephyr/usb/usb_device.h>
+#include <zephyr/usb/class/usb_hid.h>
 
 LOG_MODULE_DECLARE(shredlink, CONFIG_SHREDLINK_LOG_LEVEL);
 

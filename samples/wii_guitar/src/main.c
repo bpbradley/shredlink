@@ -9,11 +9,11 @@
  * 
  */
 
-#include <zephyr.h>
+#include <zephyr/kernel.h>
 #include <wii.h>
 #include <string.h>
 
-#define WII_GUITAR	DT_LABEL(DT_NODELABEL(wii_guitar))
+#define WII_GUITAR	DT_NODELABEL(wii_guitar)
 
 struct __attribute__((packed)) guitar_data{
 	uint8_t analog_x: 6;
@@ -37,9 +37,9 @@ void main(void)
 	const struct device *wii;
 	int ret;
 
-	wii = device_get_binding(WII_GUITAR);
+	wii = DEVICE_DT_GET(WII_GUITAR);
 	if (wii == NULL) {
-		printk("Error getting device: %s\n", WII_GUITAR);
+		printk("Error getting device");
 	}
 
 	while (1) {
