@@ -8,10 +8,10 @@
  * 
  */
 
-#include <zephyr.h>
-#include <drivers/sensor.h>
+#include <zephyr/kernel.h>
+#include <zephyr/drivers/sensor.h>
 #include <drivers/sensor/tilt.h>
-#include <drivers/gpio.h>
+#include <zephyr/drivers/gpio.h>
 
 #define LED_ID	DT_ALIAS(led0)
 #define TILT_SENSOR	DT_NODELABEL(tilt0)

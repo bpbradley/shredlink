@@ -9,15 +9,15 @@
  * 
  */
 
-#include <zephyr.h>
-#include <ztest.h>
-#include <drivers/sensor.h>
+#include <zephyr/kernel.h>
+#include <zephyr/ztest.h>
+#include <zephyr/drivers/sensor.h>
 #include <drivers/sensor/tilt.h>
 
-#define TILT_SENSOR_LABEL DT_LABEL(DT_NODELABEL(tilt0))
+#define TILT_SENSOR DT_NODELABEL(tilt0)
 const struct device *get_tilt_sensor_device(void){
-    const struct device * dev = device_get_binding(TILT_SENSOR_LABEL);
-    zassert_not_null(dev, "failed: dev '%s' is null", TILT_SENSOR_LABEL);
+    const struct device * dev = DEVICE_DT_GET(TILT_SENSOR);
+    zassert_not_null(dev, "failed: No tilt device");
     return dev;
 }
 

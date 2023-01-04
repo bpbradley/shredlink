@@ -30,10 +30,6 @@ struct gpio_tilt_data {
     #endif
 };
 
-struct gpio_tilt_config {
-	const char *tilt_controller;
-};
-
 #ifdef CONFIG_TILT_SENSOR_TRIGGER
 int gpio_tilt_trigger_set(const struct device *dev,
 			const struct sensor_trigger *trig,
