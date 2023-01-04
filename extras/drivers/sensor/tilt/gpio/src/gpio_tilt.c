@@ -12,8 +12,8 @@
 #define DT_DRV_COMPAT gpio_tilt
 
 #include <errno.h>
-#include <zephyr.h>
-#include <logging/log.h>
+#include <zephyr/kernel.h>
+#include <zephyr/logging/log.h>
 #include <drivers/sensor/tilt.h>
 #include "gpio_tilt.h"
 
@@ -82,10 +82,6 @@ static struct gpio_tilt_data gpio_tilt_data = {
 	.sensor = GPIO_DT_SPEC_INST_GET(0, tilt_gpios),
 };
 
-static const struct gpio_tilt_config gpio_tilt_cfg = {
-	.tilt_controller = DT_INST_GPIO_LABEL(0, tilt_gpios),
-};
-
 DEVICE_DT_INST_DEFINE(0, gpio_tilt_init, NULL,
-		      &gpio_tilt_data, &gpio_tilt_cfg, POST_KERNEL,
+		      &gpio_tilt_data, NULL, POST_KERNEL,
 		      CONFIG_SENSOR_INIT_PRIORITY, &gpio_tilt_api_funcs);

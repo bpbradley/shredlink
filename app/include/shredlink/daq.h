@@ -12,7 +12,7 @@
 #ifndef __SHREDLINK_POLLER_H
 #define __SHREDLINK_POLLER_H
 
-#include <zephyr.h>
+#include <zephyr/kernel.h>
 
 /**
  * @TODO: this should be configurable and part of the gamepad API

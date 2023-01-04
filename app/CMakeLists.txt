@@ -3,11 +3,10 @@
 # Copyright (c) 2021 Brian Bradley
 
 cmake_minimum_required(VERSION 3.20.0)
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 list (APPEND SYSCALL_INCLUDE_DIRS 
     ${CMAKE_SOURCE_DIR}/../extras/drivers/wii
 )
-
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(shredlink LANGUAGES C VERSION 0.2.0)

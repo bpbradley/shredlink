@@ -3,10 +3,10 @@
 
 #include <errno.h>
 #include <zephyr/types.h>
-#include <device.h>
-#include <drivers/sensor.h>
-#include <sys/util.h>
-#include <drivers/gpio.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/sensor.h>
+#include <zephyr/sys/util.h>
+#include <zephyr/drivers/gpio.h>
 
 struct gpio_tilt_data {
 	struct gpio_dt_spec sensor;

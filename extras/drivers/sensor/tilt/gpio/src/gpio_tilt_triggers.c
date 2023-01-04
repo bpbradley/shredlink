@@ -9,9 +9,9 @@
  * 
  */
 
-#include <zephyr.h>
+#include <zephyr/kernel.h>
 #include "gpio_tilt.h"
-#include <logging/log.h>
+#include <zephyr/logging/log.h>
 
 LOG_MODULE_DECLARE(tilt_gpio, CONFIG_SENSOR_LOG_LEVEL);
 

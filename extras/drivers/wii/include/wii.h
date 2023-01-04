@@ -13,7 +13,8 @@
 #define SHREDLINK_DRIVERS_SENSOR_NINTENDO_WII_H_
 
 #include <zephyr/types.h>
-#include <device.h>
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
 
 #ifdef __cplusplus
 extern "C" {
